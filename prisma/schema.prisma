@@ -1,0 +1,57 @@
+// // This is your Prisma schema file,
+// // learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider ="mongodb"
+//   url      = env("DATABASE_URL")
+// }
+
+// model Customer {
+//   id     String @id @default(auto()) @map("_id") @db.ObjectId
+//   title  String
+//   name   String
+//   phoneNumber String
+//   city   String
+//   email String @db.ObjectId
+//   user   User   @relation(fields: [email], references: [id])
+// }
+
+// model User {
+//   id    String @id @default(auto()) @map("_id") @db.ObjectId
+//   name  String
+//   email String
+//   customers Customer[]
+// }
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  phoneNumber String
+  city        String
+  temperature Float
+  userEmail   String
+  user        User    @relation(fields: [userEmail], references: [email])
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String    @unique
+  customers Customer[]
+}
+
